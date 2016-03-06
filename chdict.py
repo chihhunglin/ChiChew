@@ -1,0 +1,49 @@
+import requests
+import urllib.parse
+from bs4 import BeautifulSoup
+import re
+
+ccd = None
+ck = None
+
+def renew_session():
+	global ccd, ck
+	res = requests.get('http://dict.revised.moe.edu.tw/cgi-bin/cbdic/gsweb.cgi/?&o=dcbdic')
+	ck = res.cookies['new_www_edu_Tw']
+	soup = BeautifulSoup(res.text, 'html.parser')
+	a = soup.find('a')['href']
+	ccd = a[a.find('ccd')+4:].split('&')[0]
+
+def parse_page(url):
+	global ccd, ck
+	print(url)
+	res = requests.get(url, cookies={'new_www_edu_Tw': ck})
+	# print(res.text)
+
+def lookup(word):
+	payload = {'o': 'e0', 'ccd': ccd, 'sec': 'sec1', 'qs0': word, 'clscan': '', 'selectmode': 'mode1', 'button.x': '0', 'button.y': '0', 'button': '提交'}
+	res = requests.post('http://dict.revised.moe.edu.tw/cgi-bin/cbdic/gsweb.cgi', data=payload, cookies={'new_www_edu_Tw': ck})
+	# print(res.text)
+	soup = BeautifulSoup(res.text, 'html.parser')
+	tmp = soup.find('div', class_='menufmt1')
+	if (tmp == None):
+		num = 1
+	else:
+		num = int(tmp.find('font', class_='numfont').string)
+	if (num == 0):
+		ret = ''
+	elif (num == 1):
+		ret = 'Single result'
+	else:
+		''' find links the proper way - probably better if new modes are added
+		maintds = soup.find_all('td', class_=re.compile('maintd'))
+		for td in maintds:
+			if td.a != None:
+				print(td.a['href'])
+		'''
+		parse_page('http://dict.revised.moe.edu.tw/cgi-bin/cbdic/gsweb.cgi?ccd=%s&o=e0&sec=sec1&op=v&view=0-1' %(ccd))
+
+renew_session()
+# print(ccd)
+lookup('丁')
+

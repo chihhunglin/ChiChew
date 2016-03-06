@@ -2,9 +2,14 @@ import requests
 import urllib.parse
 from bs4 import BeautifulSoup
 import re
+import argparse
 
 ccd = None
 ck = None
+
+parser = argparse.ArgumentParser(description='Chinese-Chinese Dictionary Parser')
+parser.add_argument('keywords', nargs=argparse.REMAINDER)
+args = vars(parser.parse_args())
 
 def renew_session():
 	global ccd, ck
@@ -40,10 +45,9 @@ def lookup(word):
 	else:
 		num = int(tmp.find('font', class_='numfont').string)
 	if (num == 0):
-		ret = ''
+		data = '沒有資料'
 	elif (num == 1):
 		data = parse_soup(soup)
-		print(data)
 	else:
 		''' find links the proper way - probably better if new modes are added
 		maintds = soup.find_all('td', class_=re.compile('maintd'))
@@ -52,9 +56,11 @@ def lookup(word):
 				print(td.a['href'])
 		'''
 		data = parse_page('http://dict.revised.moe.edu.tw/cgi-bin/cbdic/gsweb.cgi?ccd=%s&o=e0&sec=sec1&op=v&view=0-1' %(ccd))
-		print(data)
+	print('%s：%s' %(word, data))
 
 renew_session()
 # print(ccd)
-lookup('哈哈')
+# lookup('哈哈')
 
+for keyword in args['keywords']:
+	lookup(keyword)

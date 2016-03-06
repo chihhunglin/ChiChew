@@ -21,23 +21,19 @@ def renew_session():
 
 def parse_soup(soup):
 	fields = soup.find_all('th', class_='std1')
-	# print(len(fields))
 	for field in fields:
 		if field.b.string.find('釋義') != -1:
 			return field.next_sibling.get_text()
 
 def parse_page(url):
 	global ccd, ck
-	# print(url)
 	res = requests.get(url, cookies={'new_www_edu_Tw': ck})
-	# print(res.text)
 	soup = BeautifulSoup(res.text, 'html.parser')
 	return parse_soup(soup)
 
 def lookup(word):
 	payload = {'o': 'e0', 'ccd': ccd, 'sec': 'sec1', 'qs0': word, 'clscan': '', 'selectmode': 'mode1', 'button.x': '0', 'button.y': '0', 'button': '提交'}
 	res = requests.post('http://dict.revised.moe.edu.tw/cgi-bin/cbdic/gsweb.cgi', data=payload, cookies={'new_www_edu_Tw': ck})
-	# print(res.text)
 	soup = BeautifulSoup(res.text, 'html.parser')
 	tmp = soup.find('div', class_='menufmt1')
 	if (tmp == None):
@@ -59,8 +55,6 @@ def lookup(word):
 	print('%s：%s' %(word, data))
 
 renew_session()
-# print(ccd)
-# lookup('哈哈')
 
 for keyword in args['keywords']:
 	lookup(keyword)

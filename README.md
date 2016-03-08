@@ -1,7 +1,7 @@
 # ChDict
 
-一隻[教育部《重編國語辭典修訂本》](http://dict.revised.moe.edu.tw/) Python 網路爬蟲 (即時資料查詢)  
-A web crawler for the Chinese-Chinese dictionary published by the Ministry of Education in Taiwan written in Python.
+[教育部《重編國語辭典修訂本》](http://dict.revised.moe.edu.tw/) 網路爬蟲 (即時資料查詢)  
+A web crawler for the Chinese-Chinese dictionary published by the Ministry of Education in Taiwan.
 
 
 ### 需求 Dependencies

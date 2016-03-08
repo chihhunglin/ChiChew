@@ -1,32 +1,33 @@
-# ChDict
-A fully-automated crawler for the Chinese-Chinese dictionary from the Ministry of Education in Taiwan
+  # ChDict
 
-*work in progress*
+[教育部《重編國語辭典修訂本》](http://dict.revised.moe.edu.tw/) Python 網路爬蟲 (即時資料查詢)  
+A web crawler for the Chinese-Chinese dictionary published by the Ministry of Education in Taiwan.
 
-### Dependencies
+
+### 需求 Dependencies
 
 - Python 3
-- Modules
+- 模組 Modules
     - re
     - requests
     - argparse
     - bs4 (BeautifulSoup 4)
     - urllib
 
-### Usage
+### 使用方式 Usage
 
 ```
 python3 chdict.py [<list of keywords separated by spaces> | -f <input file>] [-o <output file>]
 ```
 
-#### Sample Input
+#### 使用範例 Sample Usage
 
 ```
 > python3 chdict.py 狗 貓 可愛
 > python3 chdict.py -f input.txt -o output.txt
 ```
 
-#### Sample Output
+#### 範例輸出 Sample Output
 
 ```
 狗：[名]食肉犬科動物的通稱。種類很多，嗅覺和聽覺都很靈敏，可訓練來追蹤、守衛、導盲、救生或飼為寵物，且性忠誠，為人類之友。姓。如漢代有狗未央。[動]諂媚奉承。如：「底下的人專會狗著他。」
@@ -34,8 +35,14 @@ python3 chdict.py [<list of keywords separated by spaces> | -f <input file>] [-o
 可愛：討人喜愛。《書經．大禹謨》：「可愛非君？可畏非民？」宋．陸游《老學庵筆記．卷四》：「荊棘中有崖石，刻樹石二大字，奇古可愛。」流行語。可憐沒人愛。如：「你說她長得可愛？哼！可憐沒人愛！」
 ```
 
-### License
+### 授權 License
 
 [The MIT License (MIT)](LICENSE.md)
 
 Copyright © `2016` `Jasmine Chen`
+
+#### 教育部公眾授權
+
+[《重編國語辭典修訂本》公眾授權使用說明](http://resources.publicense.moe.edu.tw/reviseddict_10312.pdf)
+
+中華民國教育部（Ministry of Education, R.O.C.）。《重編國語辭典修訂本》（版本編號：2015_20151208）網址：http://dict.revised.moe.edu.tw/

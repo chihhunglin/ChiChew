@@ -1,7 +1,7 @@
-  # ChDict
+# ChDict
 
-[教育部《重編國語辭典修訂本》](http://dict.revised.moe.edu.tw/) Python 網路爬蟲 (即時資料查詢)  
-A web crawler for the Chinese-Chinese dictionary published by the Ministry of Education in Taiwan.
+一隻[教育部《重編國語辭典修訂本》](http://dict.revised.moe.edu.tw/) Python 網路爬蟲 (即時資料查詢)  
+A web crawler for the Chinese-Chinese dictionary published by the Ministry of Education in Taiwan written in Python.
 
 
 ### 需求 Dependencies
@@ -17,7 +17,7 @@ A web crawler for the Chinese-Chinese dictionary published by the Ministry of Ed
 ### 使用方式 Usage
 
 ```
-python3 chdict.py [<list of keywords separated by spaces> | -f <input file>] [-o <output file>]
+python3 chdict.py [<list of keywords> | -f <input file>] [-o <output file>]
 ```
 
 #### 使用範例 Sample Usage

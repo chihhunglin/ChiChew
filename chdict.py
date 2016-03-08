@@ -4,12 +4,16 @@ from bs4 import BeautifulSoup
 import re
 import argparse
 
+input_type = 0
 ccd = None
 ck = None
 
-parser = argparse.ArgumentParser(description='Chinese-Chinese Dictionary Parser')
+parser = argparse.ArgumentParser(description='Chinese-Chinese Dictionary Crawler')
 parser.add_argument('keywords', nargs=argparse.REMAINDER)
+parser.add_argument('-f', '--file', type=str)
 args = vars(parser.parse_args())
+if args['file'] != None:
+	input_type = 1
 
 def renew_session():
 	global ccd, ck
@@ -56,5 +60,17 @@ def lookup(word):
 
 renew_session()
 
-for keyword in args['keywords']:
-	lookup(keyword)
+if input_type == 0: # Parse input from command line arguments
+	for keyword in args['keywords']:
+		lookup(keyword)
+elif input_type == 1: # Parse input from file
+	try:
+		fin = open(args['file'])
+	except:
+		print('Error: Specified input file doesn\'t exist')
+	else:
+		line = fin.readline()
+		keywords = line.split(' ')
+		for keyword in keywords:
+			lookup(keyword.strip())
+

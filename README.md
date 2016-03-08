@@ -16,7 +16,14 @@ A fully-automated crawler for the Chinese-Chinese dictionary from the Ministry o
 ### Usage
 
 ```
-python3 chdict.py 狗 貓 可愛
+python3 chdict.py [list of keywords separated by spaces | -f <input file>]
+```
+
+#### Sample Input
+
+```
+> python3 chdict.py 狗 貓 可愛
+> python3 chdict.py -f input.txt
 ```
 
 #### Sample Output

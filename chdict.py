@@ -5,15 +5,20 @@ import re
 import argparse
 
 input_type = 0
+output_type = 0
 ccd = None
 ck = None
+results = []
 
 parser = argparse.ArgumentParser(description='Chinese-Chinese Dictionary Crawler')
 parser.add_argument('keywords', nargs=argparse.REMAINDER)
 parser.add_argument('-f', '--file', type=str)
+parser.add_argument('-o', '--output', type=str)
 args = vars(parser.parse_args())
 if args['file'] != None:
 	input_type = 1
+if args['output'] != None:
+	output_type = 1
 
 def renew_session():
 	global ccd, ck
@@ -34,6 +39,16 @@ def parse_page(url):
 	res = requests.get(url, cookies={'new_www_edu_Tw': ck})
 	soup = BeautifulSoup(res.text, 'html.parser')
 	return parse_soup(soup)
+
+def print_results():
+	if output_type == 0:
+		for pair in results:
+			print('%s：%s' %(pair['word'], pair['data']))
+	elif output_type == 1:
+		fout = open(args['output'], 'w')
+		for pair in results:
+			fout.write('%s：%s\n' %(pair['word'], pair['data']))
+		fout.close()
 
 def lookup(word):
 	payload = {'o': 'e0', 'ccd': ccd, 'sec': 'sec1', 'qs0': word, 'clscan': '', 'selectmode': 'mode1', 'button.x': '0', 'button.y': '0', 'button': '提交'}
@@ -56,7 +71,8 @@ def lookup(word):
 				print(td.a['href'])
 		'''
 		data = parse_page('http://dict.revised.moe.edu.tw/cgi-bin/cbdic/gsweb.cgi?ccd=%s&o=e0&sec=sec1&op=v&view=0-1' %(ccd))
-	print('%s：%s' %(word, data))
+	# print('%s：%s' %(word, data))
+	results.append({'word': word, 'data': data})
 
 renew_session()
 
@@ -73,4 +89,7 @@ elif input_type == 1: # Parse input from file
 		keywords = line.split(' ')
 		for keyword in keywords:
 			lookup(keyword.strip())
+		fin.close()
+
+print_results()
 

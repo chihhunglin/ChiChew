@@ -37,7 +37,7 @@ def parse_soup(soup):
 	ret = dict()
 	for field in fields:
 		if field.b.string.find('字詞') != -1:
-			ret['word'] = field.next_sibling.get_text().strip('【】')
+			ret['word'] = field.next_sibling.get_text().split('】')[0].strip('【】')
 		elif field.b.string.find('注音') != -1:
 			ret['bopomofo'] = field.next_sibling.get_text()
 		elif field.b.string.find('拼音') != -1:
